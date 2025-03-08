@@ -1,0 +1,632 @@
+:root {
+  --dark-green: #1b5e20;      /* Dark green for header */
+  --light-green: #e8f5e9;     /* Light green background */
+  --medium-green: #4caf50;    /* Medium green for accents */
+  --money-green: #2e7d32;     /* Money green for elements */
+  --gold: #ffd700;           /* Gold for accents */
+  --dark-gold: #b8860b;      /* Dark gold for hover states */
+  --success-color: #4caf50;
+  --warning-color: #ff9800;
+  --error-color: #f44336;
+  --text-light: #ffffff;
+  --text-dark: #000000;
+  --money-pattern-light: rgba(46, 125, 50, 0.05);
+  --money-pattern-dark: rgba(46, 125, 50, 0.15);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto', sans-serif;
+  background: var(--light-green);
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+}
+
+body.dark-mode {
+  background-color: var(--background-dark);
+  background-image: 
+    url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%232e7d32' fill-opacity='0.15'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+.page-transition {
+  animation: fadeIn 0.3s ease-in;
+  min-height: calc(100vh - 64px); /* Account for header height */
+  padding: 20px 0;
+  background: linear-gradient(
+    135deg,
+    rgba(46, 125, 50, 0.1) 0%,
+    rgba(46, 125, 50, 0.05) 100%
+  );
+}
+
+.money-card {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(46, 125, 50, 0.2);
+  will-change: transform;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+}
+
+.money-card::before {
+  content: '$';
+  position: absolute;
+  top: -20px;
+  right: -20px;
+  font-size: 100px;
+  opacity: 0.03;
+  color: var(--primary-color);
+  transform: rotate(15deg);
+}
+
+.money-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(46, 125, 50, 0.2);
+}
+
+.gradient-text {
+  background: linear-gradient(45deg, #2196f3, #1976d2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.loading-spinner {
+  border: 4px solid rgba(46, 125, 50, 0.1);
+  border-left-color: var(--primary-color);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+}
+
+/* Money-themed button styles */
+.money-button {
+  background: linear-gradient(45deg, var(--dark-green), var(--money-green)) !important;
+  color: white !important;
+  font-weight: bold !important;
+  text-shadow: none !important;
+  transition: all 0.3s ease !important;
+  border: none !important;
+  position: relative;
+  overflow: hidden;
+}
+
+.money-button:hover {
+  background: linear-gradient(45deg, var(--money-green), var(--dark-green)) !important;
+  box-shadow: 0 4px 15px rgba(27, 94, 32, 0.3) !important;
+}
+
+.money-button::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    45deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  transform: rotate(45deg);
+  animation: shimmer 2s infinite;
+}
+
+/* Dollar sign animation */
+@keyframes floatDollar {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0.5;
+  }
+  50% {
+    transform: translateY(-20px) rotate(10deg);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0.5;
+  }
+}
+
+.floating-dollar {
+  position: fixed;
+  font-size: 24px;
+  color: var(--primary-color);
+  animation: floatDollar 3s ease-in-out infinite;
+  z-index: -1;
+}
+
+/* Paper component money theme */
+.money-paper {
+  background: rgba(255, 255, 255, 0.95) !important;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(46, 125, 50, 0.1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05) !important;
+  position: relative;
+  overflow: hidden;
+}
+
+.money-paper::before {
+  content: '$';
+  position: absolute;
+  font-size: 150px;
+  color: rgba(46, 125, 50, 0.05);
+  right: -20px;
+  bottom: -20px;
+  transform: rotate(-15deg);
+}
+
+/* Dark mode adjustments */
+.dark-mode .money-paper {
+  background: linear-gradient(
+    135deg,
+    rgba(46, 125, 50, 0.15) 0%,
+    rgba(46, 125, 50, 0.2) 100%
+  );
+  border-color: rgba(46, 125, 50, 0.3);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .money-card::before {
+    font-size: 60px;
+  }
+  
+  .page-transition {
+    padding: 10px 0;
+  }
+}
+
+/* Coin flip animation */
+@keyframes coinFlip {
+  0% { transform: rotateY(0deg); }
+  100% { transform: rotateY(360deg); }
+}
+
+.coin {
+  position: fixed;
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(45deg, var(--money-green), var(--dark-green));
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+  animation: coinSpin 8s infinite linear;
+  box-shadow: 0 0 15px rgba(46, 125, 50, 0.2);
+  border: 2px solid rgba(46, 125, 50, 0.3);
+}
+
+/* Money rain effect */
+.money-rain {
+  position: fixed;
+  top: -100px;
+  font-family: Arial, sans-serif;
+  color: var(--primary-color);
+  font-size: 20px;
+  user-select: none;
+  z-index: -1;
+  animation: rain linear infinite;
+}
+
+@keyframes rain {
+  0% {
+    transform: translateY(-100px) rotate(0deg);
+    opacity: 1;
+  }
+  75% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* Pulsing savings effect */
+.savings-pulse {
+  position: relative;
+}
+
+.savings-pulse::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  transform: translate(-50%, -50%);
+  background-color: var(--primary-color);
+  border-radius: 50%;
+  opacity: 0;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.5;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(2);
+    opacity: 0;
+  }
+}
+
+/* Piggy bank shake animation */
+.piggy-bank {
+  display: inline-block;
+  animation: piggyShake 1s infinite;
+  transform-origin: bottom center;
+}
+
+@keyframes piggyShake {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-5deg); }
+  75% { transform: rotate(5deg); }
+}
+
+/* Calculator button press effect */
+.calc-button {
+  transition: all 0.1s ease;
+}
+
+.calc-button:active {
+  transform: scale(0.95);
+  background-color: var(--primary-color);
+  box-shadow: inset 0 0 10px rgba(0,0,0,0.2);
+}
+
+/* Growing investment plant animation */
+.investment-growth {
+  position: relative;
+  display: inline-block;
+}
+
+@keyframes grow {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+.investment-growth::before {
+  content: '🌱';
+  font-size: 24px;
+  animation: grow 2s infinite ease-in-out;
+  display: inline-block;
+}
+
+/* Wallet opening animation */
+.wallet {
+  position: relative;
+  display: inline-block;
+  transition: all 0.3s ease;
+}
+
+.wallet:hover {
+  transform: scale(1.1) translateY(-5px);
+}
+
+.wallet::after {
+  content: '👛';
+  font-size: 24px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.wallet:hover::after {
+  opacity: 1;
+  transform: translateX(20px);
+}
+
+/* Credit card swipe effect */
+.credit-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.credit-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  animation: swipe 2s infinite;
+}
+
+@keyframes swipe {
+  0% { left: -100%; }
+  50% { left: 200%; }
+  100% { left: 200%; }
+}
+
+.overview-section {
+  will-change: transform, opacity;
+}
+
+/* Global Styles */
+.money-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.money-background::before,
+.money-background::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+  opacity: 0.05;
+  background-image: 
+    repeating-linear-gradient(45deg,
+      var(--gold) 25%,
+      transparent 25%,
+      transparent 75%,
+      var(--gold) 75%,
+      var(--gold)),
+    repeating-linear-gradient(45deg,
+      var(--gold) 25%,
+      transparent 25%,
+      transparent 75%,
+      var(--gold) 75%,
+      var(--gold));
+  background-position: 0 0, 10px 10px;
+  background-size: 20px 20px;
+  animation: patternMove 20s linear infinite;
+}
+
+/* Money symbols background animation */
+.money-symbol {
+  position: absolute;
+  font-size: 2rem;
+  color: var(--money-green);
+  opacity: 0.2;
+  animation: floatSymbol 20s linear infinite;
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+  pointer-events: none;
+  will-change: transform;
+  transform: translateZ(0);
+  max-height: 100vh; /* Ensure they don't go below viewport */
+}
+
+/* Animations */
+@keyframes float {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  100% {
+    transform: translate(100px, 100px) rotate(360deg);
+  }
+}
+
+@keyframes coinSpin {
+  0% {
+    transform: translateY(-20px) rotate(0deg);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translateY(calc(100vh - 120px)) rotate(720deg);
+    opacity: 0.9;
+  }
+  100% {
+    transform: translateY(-20px) rotate(1440deg);
+    opacity: 0.7;
+  }
+}
+
+@keyframes patternMove {
+  0% {
+    background-position: 0 0, 10px 10px;
+  }
+  100% {
+    background-position: 100px 100px, 110px 110px;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    transform: rotate(45deg) translateX(-100%);
+  }
+  100% {
+    transform: rotate(45deg) translateX(100%);
+  }
+}
+
+/* Create animated money symbols */
+.create-money-symbols {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.create-money-symbols::before,
+.create-money-symbols::after {
+  font-size: 40px;
+  opacity: 0.1;
+  background: linear-gradient(45deg, var(--dark-green), var(--medium-green));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+@keyframes floatSymbol {
+  0% {
+    transform: translateY(-20px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(calc(100vh - 120px)) rotate(180deg);
+  }
+  100% {
+    transform: translateY(-20px) rotate(360deg);
+  }
+}
+
+/* Footer Styles */
+.money-footer {
+  position: relative;
+  z-index: 10; /* Higher z-index than the background elements */
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  margin-top: auto; /* Push to the bottom of flex container */
+  border-top: 1px solid rgba(46, 125, 50, 0.2);
+  background: var(--dark-green) !important;
+  color: white !important;
+  backdrop-filter: blur(10px);
+}
+
+.money-footer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(46, 125, 50, 0.05) 0%,
+    rgba(255, 215, 0, 0.05) 100%
+  );
+  z-index: -1;
+}
+
+.social-icon {
+  transition: all 0.3s ease !important;
+  margin: 0 4px !important;
+  color: white !important;
+}
+
+.social-icon:hover {
+  color: var(--light-green) !important;
+  transform: translateY(-3px);
+}
+
+/* Enhanced Money Symbols */
+.money-symbol {
+  background: linear-gradient(45deg, var(--dark-green), var(--medium-green));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+/* Enhanced Coin Animation */
+.coin::before {
+  content: '$';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: rgba(0, 0, 0, 0.3);
+  font-weight: bold;
+}
+
+/* Enhanced Button Styles */
+.money-button {
+  text-transform: uppercase !important;
+  letter-spacing: 1px !important;
+  padding: 10px 24px !important;
+}
+
+/* Enhanced Paper Styles */
+.money-paper {
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Link Hover Effects */
+a {
+  transition: all 0.3s ease;
+  text-decoration: none;
+  color: var(--money-green) !important;
+}
+
+a:hover {
+  color: var(--dark-green) !important;
+}
+
+/* Gradient Text Enhancement */
+.gradient-text {
+  background: linear-gradient(45deg, var(--gold), var(--dark-gold));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+}
+
+/* Add these animations to your existing animations section */
+@keyframes shine {
+  0% {
+    background-position: -100% 50%;
+  }
+  100% {
+    background-position: 200% 50%;
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-20px) rotate(10deg);
+  }
+}
+
+/* Responsive Footer Adjustments */
+@media (max-width: 600px) {
+  .money-footer {
+    padding: 2rem 0;
+  }
+  
+  .social-icon {
+    padding: 6px !important;
+  }
+}
+
+/* Add green accents */
+.accent-border {
+  border-left: 4px solid var(--money-green);
+} 

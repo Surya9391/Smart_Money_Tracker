@@ -1,0 +1,36 @@
+<svg 
+  width="192"
+  height="192"
+  viewBox="0 0 192 192"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <rect width="192" height="192" fill="#ffffff" />
+  
+  <!-- Buildings -->
+  <rect x="16" y="32" width="64" height="160" fill="#424242" />
+  <rect x="96" y="80" width="64" height="112" fill="#424242" />
+  
+  <!-- Window lines on buildings -->
+  <rect x="32" y="48" width="10" height="32" fill="#FFFFFF" />
+  <rect x="32" y="96" width="10" height="32" fill="#FFFFFF" />
+  <rect x="32" y="144" width="10" height="32" fill="#FFFFFF" />
+  
+  <rect x="54" y="48" width="10" height="32" fill="#FFFFFF" />
+  <rect x="54" y="96" width="10" height="32" fill="#FFFFFF" />
+  <rect x="54" y="144" width="10" height="32" fill="#FFFFFF" />
+  
+  <rect x="112" y="96" width="10" height="32" fill="#FFFFFF" />
+  <rect x="112" y="144" width="10" height="32" fill="#FFFFFF" />
+  
+  <rect x="134" y="96" width="10" height="32" fill="#FFFFFF" />
+  <rect x="134" y="144" width="10" height="32" fill="#FFFFFF" />
+  
+  <!-- Green house -->
+  <polygon points="32,128 96,64 160,128" fill="#7cb342" />
+  <rect x="48" y="128" width="96" height="64" fill="#7cb342" />
+  
+  <!-- House window -->
+  <rect x="72" y="144" width="48" height="32" fill="#FFFFFF" />
+  <rect x="80" y="152" width="32" height="16" fill="#7cb342" />
+</svg> 
